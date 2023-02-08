@@ -1,12 +1,32 @@
+import dotenv from 'dotenv'
+import minimist from "minimist";
+
+//inicializo variables de entorno
+dotenv.config()
+
+//Configuro el parametro de minimist para el tema del puerto del servidor
+const argv = minimist(process.argv.slice(2), { alias: { p: 'port' }, default: { port: 8080 } })
+
+const sessionConfig = {
+    secret: 'anarchy123',
+    resave: false,
+    saveUninitialized: false,
+    rolling: true,
+    cookie: {
+        maxAge: 60000
+    }
+};
+
 export default {
-    PORT: process.env.PORT || 8080,
+    PORT: argv.port,
+    session: sessionConfig,
     mongoLocal: {
         client: 'mongodb',
-        cnxStr: 'mongodb://localhost:27017/coderhouse'
+        cnxStr: process.env.MONGODB_LOCAL
     },
     mongoRemote: {
         client: 'mongodb',
-        cnxStr: 'mongodb+srv://admin:admin@cluster0.bev71ps.mongodb.net/ecommerce',
+        cnxStr: process.env.MONGODB_REMOTO,
         options: {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
@@ -22,6 +42,6 @@ export default {
         useNullAsDefault: true
     },
     fileSystem: {
-        path: './DB'
+        path: process.env.FILESYSTEM
     }
 }

@@ -2,15 +2,15 @@ const mongoose = require('mongoose')
 
 const mensajesSchema = new mongoose.Schema({
   author: {
-    id: { type: String, required: true },
-    nombre: { type: String, required: true },
-    apellido: { type: String, required: true },
-    edad: { type: String, required: true },
-    alias: { type: String, required: true },
+    mail: { type: String, required: true },
+    name: { type: String, required: true },
+    lastName: { type: String, required: true },
+    age: { type: String, required: true },
+    username: { type: String, required: true },
     avatar: { type: String, required: true },
   },
   text: { type: String, required: true },
   date: { type: String, required: true }
 })
 
-module.exports = mongoose.model('mensajes', mensajesSchema)
+export default mongoose.model('mensajesDesafio26', mensajesSchema)

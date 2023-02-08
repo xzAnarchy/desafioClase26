@@ -12,6 +12,7 @@ import { Server as Socket } from 'socket.io'
 import authWebRouter from './routers/web/auth.js'
 import homeWebRouter from './routers/web/home.js'
 import productosApiRouter from './routers/api/productos.js'
+import randomsApiRouter from './routers/api/randoms.js'
 
 import addProductosHandlers from './routers/ws/productos.js'
 import addMensajesHandlers from './routers/ws/mensajes.js'
@@ -29,9 +30,6 @@ const __dirname = path.dirname(__filename);
 const app = express()
 const httpServer = new HttpServer(app)
 const io = new Socket(httpServer)
-
-app.use(passport.initialize())
-
 
 //--------------------------------------------
 // configuro el socket
@@ -53,11 +51,10 @@ app.set('view engine', 'ejs');
 
 app.use(cookieParser())
 app.use(objectUtils.createOnMongoStore())
+//app.use(session(config.session))
 
-// MIDDLEWARE PASSPORT
 app.use(passport.initialize())
 app.use(passport.session())
-
 // app.use(session({
 //     // store: MongoStore.create({ mongoUrl: config.mongoLocal.cnxStr }),
 //     store: MongoStore.create({ mongoUrl: config.mongoRemote.cnxStr }),
@@ -69,6 +66,12 @@ app.use(passport.session())
 //         maxAge: 60000
 //     }
 // }))
+
+// MIDDLEWARE PASSPORT
+app.use(passport.initialize())
+app.use(passport.session())
+
+
 import auth from './routers/web/auth.js'
 const sessions = auth
 app.use('/api/sessions', sessions)
@@ -78,6 +81,7 @@ app.use('/api/sessions', sessions)
 // rutas del servidor API REST
 
 app.use(productosApiRouter)
+app.use(randomsApiRouter)
 
 //--------------------------------------------
 // rutas del servidor web
