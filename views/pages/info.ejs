@@ -16,12 +16,12 @@
 </head>
 
 <body>
+    <%- include('../partials/info.ejs', { specs })%>
     <ul>
-        <% for (const spec of specs) { %>
-        <li><%= spec.title %>: <%= spec.value %> </li>
+        <% for (const name in specs) { %>
+        <li><%= specs[name].description %>: <%= specs[name].value %> </li>
         <% } %>
     </ul>
-
 </body>
 
 </html>
