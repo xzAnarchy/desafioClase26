@@ -3,8 +3,15 @@ import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
+import cluster from 'cluster'
+import os from 'os'
 
 import config from './config.js'
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 import { Server as HttpServer } from 'http'
 import { Server as Socket } from 'socket.io'
@@ -20,8 +27,6 @@ import addMensajesHandlers from './routers/ws/mensajes.js'
 import objectUtils from './utils/objectUtils.js'
 
 import auth from './routers/web/auth.js'
-
-function createServer() {
 
 //--------------------------------------------
 // instancio servidor, socket , api y passport
@@ -49,8 +54,8 @@ app.use(express.static('public'))
 app.set('view engine', 'ejs');
 
 app.use(cookieParser())
-app.use(objectUtils.createOnMongoStore())
-//app.use(session(config.session))
+// app.use(objectUtils.createOnMongoStore())
+app.use(session(config.session))
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -90,17 +95,27 @@ app.use(homeWebRouter)
 //--------------------------------------------
 // inicio el servidor
 
-    return {
-        listen: port => new Promise((resolve, reject) => {
-            const connectedServer = httpServer.listen(port, () => {
-                resolve(connectedServer)
-            })
-            connectedServer.on('error', error => {
-                reject(error)
-            })
-        })
+// CLUSTER
+export const CPU_CORES = os.cpus().length
+if (config.mode == 'CLUSTER' && cluster.isPrimary) {
+    const numCPUs = os.cpus().length
+    console.log(`Número de procesadores: ${numCPUs}`)
+    console.log(`PID MASTER ${process.pid}`)
+    
+    for (let i = 0; i < numCPUs; i++) {
+        cluster.fork()
     }
+    
+    cluster.on('exit', worker => {
+        console.log(`Worker finalizó proceso ${process.pid} ${worker.id} ${worker.pid} finalizó el ${new Date().toLocaleString}`)
+        cluster.fork()
+    })
+} else {
+    process.on('exit', code => {
+        console.log('Salida con código de error: ' + code)
+    })
 
+    httpServer.listen(config.PORT, err => {
+        if (!err) console.log(`Servidor http escuchando en el puerto ${config.PORT} - PID: ${process.pid}`)
+    })
 }
-
-export { createServer }
