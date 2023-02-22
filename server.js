@@ -6,7 +6,7 @@ import passport from 'passport'
 import cluster from 'cluster'
 import os from 'os'
 
-import config from './config.js'
+import config from './src/config.js'
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -16,17 +16,17 @@ const __dirname = path.dirname(__filename);
 import { Server as HttpServer } from 'http'
 import { Server as Socket } from 'socket.io'
 
-import authWebRouter from './routers/web/auth.js'
-import homeWebRouter from './routers/web/home.js'
-import productosApiRouter from './routers/api/productos.js'
-import randomsApiRouter from './routers/api/randoms.js'
+import authWebRouter from './src/routers/web/auth.js'
+import homeWebRouter from './src/routers/web/home.js'
+import productosApiRouter from './src/routers/api/productos.js'
+import randomsApiRouter from './src/routers/api/randoms.js'
 
-import addProductosHandlers from './routers/ws/productos.js'
-import addMensajesHandlers from './routers/ws/mensajes.js'
+import addProductosHandlers from './src/routers/ws/productos.js'
+import addMensajesHandlers from './src/routers/ws/mensajes.js'
 
-import objectUtils from './utils/objectUtils.js'
+import objectUtils from './src/utils/objectUtils.js'
 
-import auth from './routers/web/auth.js'
+import auth from './src/routers/web/auth.js'
 
 //--------------------------------------------
 // instancio servidor, socket , api y passport
@@ -49,7 +49,8 @@ io.on('connection', async socket => {
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
+// app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.set('view engine', 'ejs');
 
