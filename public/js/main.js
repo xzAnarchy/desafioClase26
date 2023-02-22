@@ -15,10 +15,19 @@ formAgregarProducto.addEventListener('submit', e => {
 })
 
 socket.on('productos', productos => {
+    // EN CASO DE USAR HTML
+    // renderProducts(productos)
     makeHtmlTable(productos).then(html => {
         document.getElementById('productos').innerHTML = html
     })
 });
+
+const renderProducts = (data) => {
+    const html = data.map(products => {
+        return (`<tr class="d-flex justify-content-between align-items-center"><td><strong>${products.title}</strong></td> <td class="d-flex justify-content-center align-items-center""><em>$${products.price}</em></td> <td class="d-flex justify-content-center"><img src="${products.thumbnail}" height="70px" width="70"></td></tr>`)
+    }).join(' ')
+    document.getElementById('productos').innerHTML = html
+}
 
 function makeHtmlTable(productos) {
     return fetch('plantillas/tabla-productos.hbs')

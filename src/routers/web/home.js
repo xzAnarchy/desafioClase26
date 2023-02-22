@@ -7,7 +7,7 @@ import path from 'path'
 const productosWebRouter = new Router()
 
 productosWebRouter.get('/home', webAuth, (req, res) => {
-    // res.sendFile(path.join(process.cwd(), '/views/home.html'))
+    // res.sendFile('main.html', {root: 'public'})
     res.render(path.join(process.cwd(), '/views/pages/home.ejs'), { nombre: req.session.nombre })
 })
 

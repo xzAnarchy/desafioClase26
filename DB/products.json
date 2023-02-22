@@ -52,5 +52,11 @@
     "price": "120",
     "thumbnail": "https://dummyimage.com/250/000/fff",
     "id": 9
+  },
+  {
+    "title": "Test",
+    "price": "1323",
+    "thumbnail": "https://img.freepik.com/foto-gratis/disparo-gran-angular-solo-arbol-que-crece-cielo-nublado-puesta-sol-rodeada-cesped_181624-22807.jpg?w=2000",
+    "id": 10
   }
 ]
