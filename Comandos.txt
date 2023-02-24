@@ -1,3 +1,5 @@
+server con cluster node: node index.js --p=9090 --m=CLUSTER
+
 server modo fork: npm start -- --port=8080
 
 server modo cluster: npm start  -- --m=CLUSTER --p=8080 

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { webAuth } from '../../auth/index.js'
-import config from '../../config.js'
+import config from '../../config/config.js'
 
 import path from 'path'
 
@@ -12,13 +12,8 @@ productosWebRouter.get('/home', webAuth, (req, res) => {
 })
 
 productosWebRouter.get('/productos-vista-test', (req, res) => {
-    res.sendFile('productos-vista-test.html', {root: 'public'})
+    res.sendFile('productos-vista-test.html', { root: 'public' })
 })
 
-productosWebRouter.get('/info', (req, res) => {
-    res.render(path.join(process.cwd(), '/views/pages/info.ejs'), {
-        specs: config.getSpecs()
-    })
-})
 
 export default productosWebRouter
