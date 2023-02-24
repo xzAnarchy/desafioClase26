@@ -13,7 +13,10 @@ function run(url) {
 
   autocannon.track(inst, { outputStream })
 
-  outputStream.on('data', data => buf.push(data))
+  outputStream.on('data', (data) => {
+    buf.push(data)
+  })
+
   inst.on('done', () => {
     process.stdout.write(Buffer.concat(buf))
   })

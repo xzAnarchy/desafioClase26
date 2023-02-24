@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { calcular } from '../../api/randoms.js'
-import { logInfo } from '../../loggers/index.js'
+import { logError } from '../../loggers/index.js'
 
 const randomsApiRouter = new Router()
 
