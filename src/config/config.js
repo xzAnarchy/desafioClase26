@@ -11,7 +11,7 @@ const argv = minimist(process.argv.slice(2), {
         m: 'mode',
         a: 'auth'
     }, default: { 
-        port: 8080,
+        port: 8080 || process.env.PORT,
         mode: 'FORK',
         auth: 'NO_AUTH',
         NODE_ENV: 'PROD'
