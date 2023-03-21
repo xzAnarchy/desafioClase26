@@ -16,10 +16,10 @@ formAgregarProducto.addEventListener('submit', e => {
 
 socket.on('productos', productos => {
     // EN CASO DE USAR HTML
-    // renderProducts(productos)
-    makeHtmlTable(productos).then(html => {
-        document.getElementById('productos').innerHTML = html
-    })
+    renderProducts(productos)
+    // makeHtmlTable(productos).then(html => {
+    //     document.getElementById('productos').innerHTML = html
+    // })
 });
 
 const renderProducts = (data) => {
