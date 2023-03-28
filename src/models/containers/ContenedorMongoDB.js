@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 import config from '../../config/config.js';
+import { logError, logInfo, logWarning } from '../../loggers/index.js';
 import { asPOJO, removeField, renameField } from '../../utils/objectUtils.js';
 
 class ContenedorMongoDB {
-  //  #url = 'mongodb+srv://admin:admin@cluster0.bev71ps.mongodb.net/ecommerce';
+  //  #url = 'mongodb+srv://mongodb.net/ecommerce';
   //  #conexion = null;
   //  #mongoose = mongoose;
   //  #coleccion = null;
 
   constructor() {
-    this.url = config.mongoRemote.cnxStr;
     this.conexion = null;
     this.mongoose = mongoose;
     this.coleccion = null;
@@ -27,16 +27,28 @@ class ContenedorMongoDB {
   conectarDB() {
     if (!this.conexion) {
       try {
-        this.conexion = this.mongoose.connect(this.url, {
-          useNewUrlParser: true,
-        });
-        console.log('Conexión a la base de datos establecida.');
+        this.conexion = this.mongoose.connect(config.mongoRemote.cnxStr, config.mongoRemote.options);
+        logInfo('Conexión a la base de datos establecida.');
       } catch (error) {
-        console.error('Error al conectar a la base de datos:', error);
+        logError('Error al conectar a la base de datos:', error);
         throw error;
       }
     }
     return this.conexion;
+  }
+
+  async desconectarDB() {
+    if (this.conexion) {
+      try {
+        await this.conexion.disconnect();
+        logInfo('Conexión a la base de datos cerrada.');
+      } catch (error) {
+        logError('Error al desconectar la base de datos:', error);
+        throw error;
+      }
+    }else {
+      logWarning('No hay conexión a la base de datos.');
+    }
   }
 
   async listar(id) {
@@ -139,6 +151,6 @@ class ContenedorMongoDB {
 const instance = ContenedorMongoDB.getInstance();
 const instance2 = ContenedorMongoDB.getInstance();
 
-console.log(instance === instance2); // true - Singleton 
+console.log(instance === instance2); // true - Singleton
 
 export default ContenedorMongoDB;

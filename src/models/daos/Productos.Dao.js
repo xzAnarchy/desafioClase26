@@ -1,3 +1,4 @@
+import { logError, logInfo } from '../../loggers/index.js';
 import ContenedorMongoDB from '../containers/ContenedorMongoDB.js';
 import ProductosModel from '../ProductosModel.js';
 
@@ -12,10 +13,10 @@ class ProductosDao extends ContenedorMongoDB {
   async buscarProductosPorPrecio(precio) {
     try {
       const productos = await ProductosModel.find({ price: precio });
-      console.log(productos);
+      logInfo(productos);
       return productos;
     } catch (error) {
-      console.error('Error al el producto por el precio', error);
+      logError('Error al el producto por el precio', error);
       throw error;
     }
   }
