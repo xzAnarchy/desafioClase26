@@ -1,32 +1,32 @@
-import express from 'express'
-import session from 'express-session'
+import cluster from 'cluster'
+import compression from 'compression'
 import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser'
-import passport from 'passport'
-import cluster from 'cluster'
+import express from 'express'
+import session from 'express-session'
 import os from 'os'
-import compression from 'compression'
+import passport from 'passport'
 
 import { logInfo, logWarning } from './src/loggers/index.js'
 
 import config from './src/config/config.js'
 
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'path'
+import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 import { Server as HttpServer } from 'http'
 import { Server as Socket } from 'socket.io'
 
-import authWebRouter from './src/routers/web/auth.js'
-import homeWebRouter from './src/routers/web/home.js'
 import productosApiRouter from './src/routers/api/productos.js'
 import randomsApiRouter from './src/routers/api/randoms.js'
+import authWebRouter from './src/routers/web/auth.js'
+import homeWebRouter from './src/routers/web/home.js'
 import infoWebRouter from './src/routers/web/info.js'
 
-import addProductosHandlers from './src/routers/ws/productos.js'
 import addMensajesHandlers from './src/routers/ws/mensajes.js'
+import addProductosHandlers from './src/routers/ws/productos.js'
 
 import objectUtils from './src/utils/objectUtils.js'
 
@@ -111,6 +111,15 @@ app.use((req, res, next) => {
     logInfo(`${req.method} ${req.url}`)
     next()
 })
+
+// Test DTO
+import ProductosController from './src/controller/Productos.controller.js'
+app.get('/test', async (req, res) => {
+    const docs = await ProductosController.listarAllCotizaciones();
+    res.json(docs)
+})
+
+
 
 //--------------------------------------------
 // inicio el servidor
