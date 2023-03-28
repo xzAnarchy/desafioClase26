@@ -1,12 +1,12 @@
-import { Router } from 'express'
-import SessionService from '../../contenedores/ContenedorSession.js';
-import objectUtils from '../../utils/objectUtils.js';
-import path from 'path'
-import passport from 'passport'
+import { Router } from 'express';
+import passport from 'passport';
 import { Strategy } from "passport-local";
+import path from 'path';
+import UsuariosDao from '../../models/daos/Usuarios.Dao.js';
+import objectUtils from '../../utils/objectUtils.js';
 const LocalStrategy = Strategy;
 const authWebRouter = new Router()
-const sessionService = new SessionService()
+const sessionService = new UsuariosDao()
 
 passport.use(
     'login',
