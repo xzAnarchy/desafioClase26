@@ -3,16 +3,16 @@ import config from '../../config/config.js';
 import { logError, logInfo, logWarning } from '../../loggers/index.js';
 import { asPOJO, removeField, renameField } from '../../utils/objectUtils.js';
 
-class ContenedorMongoDB {
+class ContenedorMongoDB{
   //  #url = 'mongodb+srv://mongodb.net/ecommerce';
   //  #conexion = null;
   //  #mongoose = mongoose;
   //  #coleccion = null;
 
-  constructor() {
+  constructor(modelo) {
     this.conexion = null;
     this.mongoose = mongoose;
-    this.coleccion = null;
+    this.coleccion = modelo;
   }
 
   //Aplico el patron Singleton

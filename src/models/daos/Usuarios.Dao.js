@@ -3,10 +3,9 @@ import UsuariosModel from '../UsuariosModel.js';
 
 class UsuariosDao extends ContenedorMongoDB {
   constructor() {
-    super();
+    super(UsuariosModel);
     this.contenedor = ContenedorMongoDB.getInstance();
     this.contenedor.conectarDB();
-    this.coleccion = UsuariosModel;
   }
 
   //Si quiero usar una funcion de la clase padre, tengo que utilizarla como promesa y usar .then()

@@ -4,10 +4,9 @@ import ProductosModel from '../ProductosModel.js';
 
 class ProductosDao extends ContenedorMongoDB {
   constructor() {
-    super();
+    super(ProductosModel);
     this.contenedor = ContenedorMongoDB.getInstance();
     this.contenedor.conectarDB();
-    this.coleccion = ProductosModel;
   }
 
   async buscarProductosPorPrecio(precio) {
