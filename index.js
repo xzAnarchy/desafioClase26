@@ -119,6 +119,9 @@ app.get('/test', async (req, res) => {
     res.json(docs)
 })
 
+// Test MOCHA API
+import {api} from './src/api/productos.js'
+app.use('/apiProductos', api)
 
 
 //--------------------------------------------

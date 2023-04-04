@@ -1,4 +1,4 @@
-import productosApi from '../../api/productos.js'
+import productosApi from '../../api/productosLocal.js'
 
 export default async function configurarSocket(socket, sockets) {
     try {

@@ -9,12 +9,17 @@ const ProductosController = {
   async guardar(elemento) {
     return await PrdDAO.guardar(elemento);
   },
+
   async listarAll() {
     return await PrdDAO.listarAll();
   },
+
+  async listarById(id) {
+    return await PrdDAO.listar(id);
+  },
+
   async listarAllCotizaciones() {
     const docs = await PrdDAO.listarAll();
-
     const docsDto = docs.map((producto) => {
       const cotizaciones = {
         precioDolar: cot.getPrecioSegunMoneda(producto.price, 'USD'),
